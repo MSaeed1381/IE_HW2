@@ -28,7 +28,7 @@ export default class ProfessorController {
         professor
             .save(professor)
             .then(data => {
-                res.status(200).json({
+                res.status(201).json({
                     success: true,
                     body: data,
                     message: "User Created Successfully"
@@ -58,14 +58,14 @@ export default class ProfessorController {
         Professor.findByIdAndUpdate(id, req.body, {useFindAndModify: false})
             .then((data)=>{
                 if (!data){
-                    res.json({
+                    res.status(404).json({
                         success: false,
                         body: null,
                         message: "Professor not found"
                     });
                     return;
                 }
-                res.json({
+                res.status(200).json({
                     success: true,
                     body: req.body,
                     message: "Professor Updated Successfully"
@@ -73,11 +73,78 @@ export default class ProfessorController {
                 }
             )
             .catch((err)=>{
-                res.json({
+                res.status(500).json({
                     success: false,
                     body: null,
                     message: err.message || "Some error occurred while updating the Professor."
                 })
             })
     }
+
+    static delete(req, res){
+            const id = req.params.id;
+
+            Professor.findByIdAndRemove(id)
+                .then(data => {
+                    if (!data) {
+                        res.status(404).json({
+                            success: false,
+                            body: null,
+                            message: `Cannot delete Professor with id=${id}. Maybe Professor was not found!`
+                        });
+                    } else {
+                        res.status(200).json({
+                            success: true,
+                            body: data,
+                            message: "Professor was deleted successfully!"
+                        });
+                    }
+                })
+                .catch(err => {
+                    res.status(500).send({
+                        success: false,
+                        body: null,
+                        message: err.message || `Could not delete Professor with id= ${id}`
+                    });
+                });
+         }
+
+         static getAllProfessors(req, res){
+            Professor.find().then((data)=>{
+                res.status(200).json({
+                    success: true,
+                    body: data,
+                    message: "Professor was deleted successfully!"
+                });
+            }).catch((err)=>{
+                res.status(500).json({
+                    success: false,
+                    body: null,
+                    message: err.message || `Could not get all Professors.`
+                });
+            })
+         }
+         static getProfessorById(req, res){
+            const id = req.params.id;
+            Professor.findById(id).then((data)=> {
+                if (!data) {
+                    return res.status(404).json({
+                        success: false,
+                        body: null,
+                        message: `Professor with id ${id} not found.`
+                    });
+                }
+                return res.status(200).json({
+                    success: true,
+                    body: data,
+                    message: `get Professor with id ${id}.`
+                })
+            }).catch(err => {
+                return res.status(500).json({
+                    success: false,
+                    body: null,
+                    message: err.message || `Could not get the Professor.`
+                })
+            })
+         }
 }

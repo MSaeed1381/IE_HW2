@@ -7,6 +7,9 @@ export default (app) => {
     // Create a new professor
     router.post("/", ProfessorController.create);
     router.put("/:id", ProfessorController.update);
+    router.delete("/:id", ProfessorController.delete);
+    router.get("/", ProfessorController.getAllProfessors);
+    router.get("/:id", ProfessorController.getProfessorById)
 
     app.use('/admin/Professor', router);
 };
