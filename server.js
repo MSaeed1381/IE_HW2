@@ -5,6 +5,7 @@ import "dotenv/config";
 import db from "./app/models/index.js";
 import professorRoute from "./app/routes/professor.route.js";
 import studentRoute from "./app/routes/student.route.js";
+import educationManager from "./app/routes/manager.route.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -32,6 +33,7 @@ db.mongoose
 // break our app into separate mini-app
 app.use(professorRoute);
 app.use(studentRoute);
+app.use(educationManager);
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);

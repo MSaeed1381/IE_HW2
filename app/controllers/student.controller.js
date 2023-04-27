@@ -1,108 +1,77 @@
 import db from '../models/index.js'
+import createResponse from "../utils/create-response.js";
+import existAllParams from "../utils/exist-all-params.js";
+
 const Student = db.students;
+const requiredStudentParams = ["full_name", "user_id", "password_hash", "email", "phone",
+    "degree", "incomingYear", "incomingSemester", "gradeAverage", "college", "field"];
 
 export default class StudentController {
-    static create(req, res){
-        if (!req.body.full_name) { // TODO
-            res.status(204).json({
-                success: false,
-                body: null,
-                message: "Content can not be empty!"
-            });
-            return;
+    static async create(req, res) {
+        if (!existAllParams(requiredStudentParams, req.body)){
+            return res.status(400).json(createResponse(true, "Content is incomplete!"));
         }
-
-        const student = new Student(req.body);
-
-        // Save Professor in the database
-        student
-            .save(student)
-            .then(data => {
-                res.status(201).json({
-                    success: true,
-                    body: data,
-                    message: "User Created Successfully"
-                });
-            })
-            .catch(err => {
-                res.status(500).json({
-                    success: false,
-                    body: null,
-                    message:
-                        err.message || "Some error occurred while creating the User."
-                });
-            });
-    }
-
-    static update(req, res){
-        if (!Object.keys(req.body).length) { // TODO
-            res.status(400).json({
-                success: false,
-                body: null,
-                message: "Content can not be empty!"
-            });
-            return;
+        // Save Student in the database
+        try {
+            const student = new Student(req.body);
+            const data = await student.save(student);
+            res.status(201).json(createResponse(true, "Student Created Successfully!", data));
+        } catch (err) {
+            res.status(500).json(createResponse(false,
+                err.message || "Some error occurred while creating the Student."));
         }
+    }
+
+    static async update(req, res){
+        if (!Object.keys(req.body).length) {
+            return res.status(400).json(createResponse(false, "Content can not be empty!"));
+        }
+        try {
+            const id = req.params.id;
+            const data = await Student.findByIdAndUpdate(id, req.body, {useFindAndModify: true});
+            if (data)
+                return res.status(200).json(createResponse(true, "Student Updated Successfully"));
+            return res.status(404).json(createResponse(false, "Student not found"));
+        }catch (err) {
+            return res.status(500).json(false,
+                err.message || "Some error occurred while updating the Student.")
+        }
+    }
+
+    static async delete(req, res){
         const id = req.params.id;
-        Student.findByIdAndUpdate(id, req.body, {useFindAndModify: false})
-            .then((data)=>{
-                    if (!data){
-                        res.status(404).json({
-                            success: false,
-                            body: null,
-                            message: "Professor not found"
-                        });
-                        return;
-                    }
-                    res.status(200).json({
-                        success: true,
-                        body: req.body,
-                        message: "User Updated Successfully"
-                    });
-                }
-            )
-            .catch((err)=>{
-                res.status(500).json({
-                    success: false,
-                    body: null,
-                    message: err.message || "Some error occurred while updating the Professor."
-                })
-            })
+        try {
+            const data = await Student.findByIdAndRemove(id);
+            if (data)
+                return res.status(200).json(createResponse(true, "Student Deleted Successfully"));
+            return res.status(404).json(createResponse(false, "Student not found"));
+        } catch(err){
+            res.status(500).json(createResponse(false,
+                err.message || "Some error occurred while deleting the Student."));
+        }
     }
-
-    static delete(req, res){
+    static async getAllStudents(req, res){
+        try{
+            const data = await Student.find();
+            return res.status(200).json(createResponse(true, "get all students", data));
+        } catch (err) {
+            return res.status(500).json(createResponse(false ,
+                err.message || `Could not get all Students.`
+            ));
+        }
+    }
+    static async getStudentById(req, res){
         const id = req.params.id;
-
-        Student.findByIdAndRemove(id)
-            .then(data => {
-                if (!data) {
-                    res.status(404).json({
-                        success: false,
-                        body: null,
-                        message: `Cannot delete Professor with id=${id}. Maybe Professor was not found!`
-                    });
-                } else {
-                    res.status(200).json({
-                        success: true,
-                        body: data,
-                        message: "Professor was deleted successfully!"
-                    });
-                }
-            })
-            .catch(err => {
-                res.status(500).send({
-                    success: false,
-                    body: null,
-                    message: err.message || `Could not delete Professor with id= ${id}`
-                });
-            });
-    }
-
-    static getStudentById(){
-
-    }
-
-    static getAllStudents(){
-
+        try {
+            const data = await Student.findById(id);
+            if (data)
+                return res.status(200).json(createResponse(true,
+                    `get Student with id ${id}.`, data));
+            return res.status(404).json(createResponse(false,
+                `Student with id ${id} not found.`));
+        } catch (err) {
+            return res.status(500).json(createResponse(false,
+                err.message || `Could not get the Student.`))
+        }
     }
 }
