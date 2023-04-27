@@ -5,7 +5,7 @@ export default class ProfessorController {
     static create(req, res){
 
         if (!req.body.full_name) { // TODO
-            res.status(400).json({
+            res.status(204).json({
                 success: false,
                 body: null,
                 message: "Content can not be empty!"
@@ -13,16 +13,7 @@ export default class ProfessorController {
             return;
         }
 
-        const professor = new Professor({
-            full_name: req.body.full_name,
-            user_id: req.body.user_id,
-            password_hash: req.body.password_hash,
-            email: req.body.email,
-            phone: req.body.phone,
-            college: req.body.college,
-            field: req.body.field,
-            rank: req.body.rank,
-        });
+        const professor = new Professor(req.body);
 
         // Save Professor in the database
         professor
@@ -32,7 +23,7 @@ export default class ProfessorController {
                     success: true,
                     body: data,
                     message: "User Created Successfully"
-                });
+            });
             })
             .catch(err => {
                 res.status(500).json({
