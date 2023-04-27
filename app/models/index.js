@@ -14,7 +14,7 @@ const db = {};
 db.mongoose = mongoose;
 db.url = config.url;
 
-// entities
+// entities (dependency injection)
 db.students = students(mongoose);
 db.professors = professors(mongoose);
 db.semesterCourses = semesterCourses(mongoose);

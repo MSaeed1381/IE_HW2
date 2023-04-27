@@ -1,9 +1,10 @@
+import {hash, compare} from 'bcrypt'
 import db from '../models/index.js'
 import createResponse from "../utils/create-response.js";
 import existAllParams from "../utils/exist-all-params.js";
 
 const Professor = db.professors;
-const requiredProfessorParams = ["full_name", "user_id", "password_hash", "email", "phone",
+const requiredProfessorParams = ["full_name", "user_id", "password", "email", "phone",
     "college", "field", "rank"];
 
 export default class ProfessorController {
@@ -13,7 +14,11 @@ export default class ProfessorController {
         }
         // Save Professor in the database
         try {
-            const professor = new Professor(req.body);
+            const {full_name, user_id, password, email, phone, college, field, rank} = req.body;
+            const password_hash = await hash(password, 10); // hash the password with salt round 10
+            const professor = new Professor({
+                full_name, user_id, password_hash, email, phone, college, field, rank
+            });
             const data = await professor.save(professor);
             res.status(201).json(createResponse(true, "Professor Created Successfully !", data));
         } catch (err) {

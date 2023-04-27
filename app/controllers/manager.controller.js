@@ -1,9 +1,10 @@
 import db from '../models/index.js'
 import createResponse from "../utils/create-response.js";
 import existAllParams from "../utils/exist-all-params.js";
+import {hash} from "bcrypt";
 
 const EducationManager = db.educationManagers;
-const requiredEducationManagerParams = ["full_name", "user_id", "password_hash", "email", "phone",
+const requiredEducationManagerParams = ["full_name", "user_id", "password", "email", "phone",
     "college"];
 
 export default class EducationController {
@@ -13,7 +14,9 @@ export default class EducationController {
         }
         // Save Education Manager in the database
         try {
-            const educationManager = new EducationManager(req.body);
+            const {full_name, user_id, password, email, phone, college} = req.body;
+            const password_hash = await hash(password, 10); // hash the password with salt round 10
+            const educationManager = new EducationManager({full_name, user_id, password_hash, email, phone, college});
             const data = await educationManager.save(educationManager);
             res.status(201).json(createResponse(true, "Education Manager Created Successfully!", data));
         } catch (err) {

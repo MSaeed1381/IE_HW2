@@ -1,9 +1,10 @@
 import db from '../models/index.js'
 import createResponse from "../utils/create-response.js";
 import existAllParams from "../utils/exist-all-params.js";
+import {hash} from "bcrypt";
 
 const Student = db.students;
-const requiredStudentParams = ["full_name", "user_id", "password_hash", "email", "phone",
+const requiredStudentParams = ["full_name", "user_id", "password", "email", "phone",
     "degree", "incomingYear", "incomingSemester", "gradeAverage", "college", "field"];
 
 export default class StudentController {
@@ -13,7 +14,13 @@ export default class StudentController {
         }
         // Save Student in the database
         try {
-            const student = new Student(req.body);
+            const {full_name, user_id, password, email, phone,
+                degree, incomingYear, incomingSemester, gradeAverage, college, field} = req.body;
+            const password_hash = await hash(password, 10); // hash the password with salt round 10
+            const student = new Student({
+                full_name, user_id, password_hash, email, phone,
+                degree, incomingYear, incomingSemester, gradeAverage, college, field
+            });
             const data = await student.save(student);
             res.status(201).json(createResponse(true, "Student Created Successfully!", data));
         } catch (err) {
