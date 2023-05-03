@@ -1,0 +1,9 @@
+localhost PostmanRuntime/7.32.2 $athun [2023-05-03T21:04:37.662Z] "GET /admin/Professors http/1.1" 200 0
+localhost PostmanRuntime/7.32.2 $athun [2023-05-03T21:04:40.062Z] "POST /admin/Professor/ http/1.1" 500 264
+localhost PostmanRuntime/7.32.2 $athun [2023-05-03T21:04:42.502Z] "GET /admin/Professor/64482e91811859154579de9a http/1.1" 404 0
+localhost PostmanRuntime/7.32.2 $athun [2023-05-03T21:04:44.595Z] "PUT /admin/Professor/64482e91811859154579de9a http/1.1" 404 233
+localhost PostmanRuntime/7.32.2 $athun [2023-05-03T21:04:47.222Z] "POST /admin/manager http/1.1" 201 161
+localhost PostmanRuntime/7.32.2 $athun [2023-05-03T21:04:50.104Z] "GET /admin/managers http/1.1" 200 0
+localhost PostmanRuntime/7.32.2 $athun [2023-05-03T21:04:54.763Z] "POST /course http/1.1" 400 159
+localhost PostmanRuntime/7.32.2 $athun [2023-05-03T21:04:56.514Z] "GET /course/64527ac0f4410eea50841846 http/1.1" 404 0
+localhost Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/112.0 $athun [2023-05-03T21:06:11.533Z] "GET /admin/managers http/1.1" 200 0

@@ -2,6 +2,7 @@ import express, { json, urlencoded } from "express";
 import cors from "cors";
 import "dotenv/config";
 
+
 import db from "./app/models/index.js";
 import ActivateRoutes from "./app/routes/index.js"
 
@@ -27,8 +28,8 @@ db.mongoose
         process.exit();
     });
 
-ActivateRoutes(app);
 
+ActivateRoutes(app);
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
