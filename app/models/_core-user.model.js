@@ -1,7 +1,7 @@
 
 const baseCoreUserOption = {
-    discriminator: "user",
-    collection: "user",
+    discriminator: "users",
+    collection: "users",
 };
 
 export default mongoose => mongoose.models.BaseUserSchema || mongoose.model("BaseUserSchema", mongoose.Schema(

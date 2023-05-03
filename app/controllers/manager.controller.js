@@ -1,9 +1,10 @@
+import {hash} from "bcrypt";
+
 import db from '../models/index.js'
 import createResponse from "../utils/create-response.js";
 import existAllParams from "../utils/exist-all-params.js";
-import {hash} from "bcrypt";
 
-const EducationManager = db.educationManagers;
+const EducationManager = db.itManagers;
 const requiredEducationManagerParams = ["full_name", "user_id", "password", "email", "phone",
     "college"];
 

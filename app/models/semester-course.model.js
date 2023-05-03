@@ -1,6 +1,6 @@
-import ApprovedCourse from "./approved-course.model.js";
+import Course from "./_core-course.model.js";
 
-export default mongoose => ApprovedCourse(mongoose).discriminator(
+export default mongoose => Course(mongoose).discriminator(
     "semester courses",
     mongoose.Schema({
         classDate: {
