@@ -8,6 +8,7 @@ export default (mongoose) => mongoose.models.courses
         courseName: {
             type: String,
             trim: true,
+            unique: true
         },
         prerequisites: [{
             type: mongoose.Schema.Types.ObjectId,

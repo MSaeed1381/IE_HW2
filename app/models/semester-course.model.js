@@ -1,7 +1,7 @@
 import Course from "./_core-course.model.js";
 
 export default mongoose => Course(mongoose).discriminator(
-    "semester courses",
+    "semesterCourses",
     mongoose.Schema({
         classDate: {
             type: Date,
