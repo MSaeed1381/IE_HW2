@@ -9,6 +9,7 @@ import users from "./_core-user.model.js"
 import courses from "./_core-course.model.js"
 import educationManagers from "./education-manager.model.js";
 import approvedCourses from "./approved-course.model.js";
+import roles from "./role.model.js";
 
 
 // config the database
@@ -30,5 +31,8 @@ db.educationManagers = educationManagers(mongoose);
 db.courses = courses(mongoose);
 db.approvedCourses = approvedCourses(mongoose);
 db.semesterCourses = semesterCourses(mongoose);
+
+// roles
+db.roles = roles(mongoose);
 
 export default db;

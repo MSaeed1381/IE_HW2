@@ -1,6 +1,6 @@
 import fs from "fs"
 
-export default async (req, res, next) => {
+export default async (req, res) => {
     if (!fs.existsSync("logger.log"))
         fs.writeFileSync("logger.log", "Common Log Format File Created")
 

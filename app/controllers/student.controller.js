@@ -5,6 +5,8 @@ import createResponse from "../utils/create-response.js";
 import existAllParams from "../utils/exist-all-params.js";
 
 const Student = db.students;
+const Role = db.roles;
+
 const requiredStudentParams = ["full_name", "user_id", "password", "email", "phone",
     "degree", "incomingYear", "incomingSemester", "gradeAverage", "college", "field"];
 
@@ -18,9 +20,13 @@ export default class StudentController {
             const {full_name, user_id, password, email, phone,
                 degree, incomingYear, incomingSemester, gradeAverage, college, field} = req.body;
             const password_hash = await hash(password, 10); // hash the password with salt round 10
+
+            const role = await Role.findOne({name: "student"});
+
             const student = new Student({
                 full_name, user_id, password_hash, email, phone,
-                degree, incomingYear, incomingSemester, gradeAverage, college, field
+                degree, incomingYear, incomingSemester, gradeAverage, college, field,
+                role
             });
             const data = await student.save(student);
             res.status(201).json(createResponse(true, "Student Created Successfully!", data));
