@@ -6,6 +6,7 @@ import existAllParams from "../utils/exist-all-params.js";
 
 const EducationManager = db.itManagers;
 const Role = db.roles;
+const ROLES = db.ROLES;
 
 const requiredEducationManagerParams = ["full_name", "user_id", "password", "email", "phone",
     "college"];
@@ -20,7 +21,7 @@ export default class EducationController {
             const {full_name, user_id, password, email, phone, college} = req.body;
             const password_hash = await hash(password, 10); // hash the password with salt round 10
 
-            const role = await Role.findOne({name: "edu_manager"});
+            const role = await Role.findOne({name: ROLES[1]});
 
             const educationManager = new EducationManager({full_name, user_id, password_hash, email,
                 phone, college, role});

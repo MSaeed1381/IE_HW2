@@ -6,6 +6,7 @@ import existAllParams from "../utils/exist-all-params.js";
 
 const Professor = db.professors;
 const Role = db.roles;
+const ROLES = db.ROLES;
 
 const requiredProfessorParams = ["full_name", "user_id", "password", "email", "phone",
     "college", "field", "rank"];
@@ -20,7 +21,7 @@ export default class ProfessorController {
             const {full_name, user_id, password, email, phone, college, field, rank} = req.body;
             const password_hash = await hash(password, 10); // hash the password with salt round 10
 
-            const role = await Role.findOne({name: "professor"});
+            const role = await Role.findOne({name: ROLES[2]});
 
             const professor = new Professor({
                 full_name, user_id, password_hash, email, phone, college, field, rank, role

@@ -34,5 +34,5 @@ db.semesterCourses = semesterCourses(mongoose);
 
 // roles
 db.roles = roles(mongoose);
-
+db.ROLES = ["admin", "edu_manager", "professor", "student"];
 export default db;

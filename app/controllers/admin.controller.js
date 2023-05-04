@@ -6,6 +6,7 @@ import existAllParams from "../utils/exist-all-params.js";
 
 const Admin = db.itManagers;
 const Role = db.roles;
+const ROLES = db.ROLES
 
 const requiredAdminParams = ["full_name", "user_id", "password", "email", "phone"];
 
@@ -19,7 +20,7 @@ export default class AdminController {
             const {full_name, user_id, password, email, phone} = req.body;
             const password_hash = await hash(password, 10); // hash the password with salt round 10
 
-            const role = await Role.findOne({name: "admin"});
+            const role = await Role.findOne({name: ROLES[0]});
 
             const admin = new Admin({
                 full_name, user_id, password_hash, email, phone, role

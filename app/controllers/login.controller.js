@@ -23,8 +23,13 @@ export default class LoginController {
         if (!success)
             return res.status(400).json(createResponse(false, `password is not correct`));
 
-        const accessToken = jwt.sign(user_id, process.env.ACCESS_TOKEN_SECRET);
-        return res.status(200).json(createResponse(true, `Hi ${user.full_name}`, accessToken));
+        const fullName = user.full_name;
+        const accessToken = jwt.sign({id: user.user_id, role: user.role}, process.env.ACCESS_TOKEN_SECRET, {
+            expiresIn: 259200 // 3 day
+        });
+        return res.status(200).json(createResponse(true, `User Logged in`, {
+            fullName, accessToken
+        }));
 
 
     }
