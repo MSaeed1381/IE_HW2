@@ -5,15 +5,30 @@ import RoleHandler from "../../middlewares/role.handler.js";
 
 const router = express.Router();
 
-router.route('/admin/manager')
-    .post([Auth.isAuthenticated, RoleHandler.isAdmin], StudentController.create)
+router
+    .route("/admin/manager")
+    .post(
+        [Auth.isAuthenticated, RoleHandler.isAdmin],
+        StudentController.create
+    );
 
-router.route('/admin/manager/:id')
+router
+    .route("/admin/manager/:id")
     .put([Auth.isAuthenticated, RoleHandler.isAdmin], StudentController.update)
-    .get([Auth.isAuthenticated, RoleHandler.isAdmin], StudentController.getEducationManagerById)
-    .delete([Auth.isAuthenticated, RoleHandler.isAdmin], StudentController.delete);
+    .get(
+        [Auth.isAuthenticated, RoleHandler.isAdmin],
+        StudentController.getEducationManagerById
+    )
+    .delete(
+        [Auth.isAuthenticated, RoleHandler.isAdmin],
+        StudentController.delete
+    );
 
-router.route('/admin/managers')
-    .get([Auth.isAuthenticated, RoleHandler.isAdmin], StudentController.getAllEducationManagers)
+router
+    .route("/admin/managers")
+    .get(
+        [Auth.isAuthenticated, RoleHandler.isAdmin],
+        StudentController.getAllEducationManagers
+    );
 
 export default router;

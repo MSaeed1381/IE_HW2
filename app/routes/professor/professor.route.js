@@ -6,14 +6,25 @@ import CourseController from "../../controllers/professor/course.controller.js";
 
 const router = express.Router();
 
-router.route('/professor/:id')
-    .put([Auth.isAuthenticated, RoleHandler.isProfessor], ProfessorController.update);
+router
+    .route("/professor/:id")
+    .put(
+        [Auth.isAuthenticated, RoleHandler.isProfessor],
+        ProfessorController.update
+    );
 
-router.route('/courses')
-    .get([Auth.isAuthenticated, RoleHandler.isProfessor], CourseController.getCourseById);
+router
+    .route("/courses")
+    .get(
+        [Auth.isAuthenticated, RoleHandler.isProfessor],
+        CourseController.getCourseById
+    );
 
-router.route('/courses')
-    .get([Auth.isAuthenticated, RoleHandler.isProfessor], CourseController.getAllCourses);
-
+router
+    .route("/courses")
+    .get(
+        [Auth.isAuthenticated, RoleHandler.isProfessor],
+        CourseController.getAllCourses
+    );
 
 export default router;

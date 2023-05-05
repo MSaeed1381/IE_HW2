@@ -5,12 +5,11 @@ import students from "./users/student.model.js";
 import professors from "./users/professor.model.js";
 import semesterCourses from "./courses/semester-course.model.js";
 import itManagers from "./users/it-manager.model.js";
-import users from "./users/_core-user.model.js"
-import courses from "./courses/_core-course.model.js"
+import users from "./users/_core-user.model.js";
+import courses from "./courses/_core-course.model.js";
 import educationManagers from "./users/education-manager.model.js";
 import approvedCourses from "./courses/approved-course.model.js";
 import roles from "./roles/role.model.js";
-
 
 // config the database
 mongoose.Promise = global.Promise;
