@@ -1,15 +1,15 @@
 import mongoose from "mongoose";
 
 import config from "../config/db.config.js";
-import students from "./student.model.js";
-import professors from "./professor.model.js";
-import semesterCourses from "./semester-course.model.js";
-import itManagers from "./it-manager.model.js";
-import users from "./_core-user.model.js"
-import courses from "./_core-course.model.js"
-import educationManagers from "./education-manager.model.js";
-import approvedCourses from "./approved-course.model.js";
-import roles from "./role.model.js";
+import students from "./users/student.model.js";
+import professors from "./users/professor.model.js";
+import semesterCourses from "./courses/semester-course.model.js";
+import itManagers from "./users/it-manager.model.js";
+import users from "./users/_core-user.model.js"
+import courses from "./courses/_core-course.model.js"
+import educationManagers from "./users/education-manager.model.js";
+import approvedCourses from "./courses/approved-course.model.js";
+import roles from "./roles/role.model.js";
 
 
 // config the database

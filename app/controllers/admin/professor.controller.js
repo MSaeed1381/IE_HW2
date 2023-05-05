@@ -1,8 +1,8 @@
 import {hash} from 'bcrypt';
 
-import db from '../models/index.js';
-import createResponse from "../utils/create-response.js";
-import existAllParams from "../utils/exist-all-params.js";
+import db from '../../models/index.js';
+import createResponse from "../../utils/create-response.js";
+import existAllParams from "../../utils/exist-all-params.js";
 
 const Professor = db.professors;
 const Role = db.roles;

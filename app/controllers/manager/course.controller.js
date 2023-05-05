@@ -1,6 +1,6 @@
-import db from '../models/index.js'
-import createResponse from "../utils/create-response.js";
-import existAllParams from "../utils/exist-all-params.js";
+import db from '../../models/index.js'
+import createResponse from "../../utils/create-response.js";
+import existAllParams from "../../utils/exist-all-params.js";
 
 const Course = db.courses;
 const ApprovedCourse = db.approvedCourses;
@@ -18,7 +18,7 @@ export default class CourseController {
         let courseType = req.body.courseType;
         if (!courseType)
             return res.status(404).json(createResponse(false,
-                "course type not found."));
+                "courses type not found."));
 
         if (courseType === "approved"){
             if (!existAllParams(requiredApprovedCourseParams, req.body)){
@@ -60,7 +60,7 @@ export default class CourseController {
         }
         else
             return res.status(400).json(createResponse(false,
-                "course type is not correct."));
+                "courses type is not correct."));
     }
 
 

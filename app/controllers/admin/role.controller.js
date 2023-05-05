@@ -1,7 +1,7 @@
 
-import db from '../models/index.js'
-import createResponse from "../utils/create-response.js";
-import existAllParams from "../utils/exist-all-params.js";
+import db from '../../models/index.js'
+import createResponse from "../../utils/create-response.js";
+import existAllParams from "../../utils/exist-all-params.js";
 
 const Role = db.roles;
 const requiredRoleParams = ["name"];

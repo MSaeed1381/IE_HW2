@@ -1,9 +1,9 @@
-import professorRoute from "./professor.route.js";
-import studentRoute from "./student.route.js";
-import educationManagerRoute from "./manager.route.js";
-import courseRoute from "./course.route.js";
+import professorRoute from "./admin/professor.route.js";
+import studentRoute from "./admin/student.route.js";
+import educationManagerRoute from "./admin/manager.route.js";
+import courseRoute from "./manager/course.route.js";
 import loginRoute from "./login.route.js"
-import roleRoute from "./role.route.js";
+import roleRoute from "./admin/role.route.js";
 import adminRoute from "./admin.route.js";
 
 import Logger from "../utils/logger.js"
