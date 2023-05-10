@@ -1,20 +1,28 @@
 import BaseUserSchema from "./_core-user.model.js";
+import Joi from "joi";
 
 export default (mongoose) =>
     BaseUserSchema(mongoose).discriminator(
         "professors",
         mongoose.Schema({
-            college: {
-                type: String,
-                trim: true,
-            },
-            field: {
-                type: String,
-                trim: true,
-            },
-            rank: {
-                type: String,
-                trim: true,
-            },
+            college: Joi.string()
+                .lowercase()
+                .trim(),
+
+            field: Joi.string()
+                .lowercase()
+                .trim(),
+
+            rank: Joi.string()
+                .trim()
+                .lowercase()
+                .valid("Instructor", "Assistant",
+                    "Associate", "Professor"),
+
+            courses: [{
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'courses',
+            }],
+
         })
     );

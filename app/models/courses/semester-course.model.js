@@ -1,30 +1,32 @@
 import Course from "./_core-course.model.js";
+import Joi from "joi";
 
 export default (mongoose) =>
     Course(mongoose).discriminator(
         "semesterCourses",
         mongoose.Schema({
-            classDate: {
-                type: Date,
-                default: Date.now(),
-            },
-            examDate: {
-                type: Date,
-                default: Date.now(),
-            },
-            examLocation: {
-                type: String,
-                trim: true,
-            },
+            classDate: Joi.date()
+                .default(Date.now),
+
+            examDate: Joi.date()
+                .default(Date.now),
+
+            examLocation: Joi.string()
+                .trim()
+                .required(),
+
             courseProfessor: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "professors",
             },
-            capacity: {
-                type: Number,
-            },
-            educationSemester: {
-                type: String,
-            },
+            capacity: Joi
+                .number()
+                .min(0)
+                .max(200)
+                .required(),
+
+            educationSemester: Joi
+                .string()
+                .trim()
         })
     );

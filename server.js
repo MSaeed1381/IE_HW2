@@ -5,17 +5,22 @@ import "dotenv/config";
 
 import db from "./app/models/index.js";
 import ActivateRoutes from "./app/routes/index.js";
+import createResponse from "./app/utils/create-response.js";
 
 const PORT = process.env.PORT || 3000;
 const app = express();
 
-// middlewares
-app.use(cors({ origin: "http://127.0.0.1:3001" }));
-app.use(rateLimit({
+// rate limit middleware
+const requestRateLimit = rateLimit({
     max: 100,
     standardHeaders: true,
     legacyHeaders: false,
-}));
+});
+
+app.use(requestRateLimit);
+
+// middlewares
+app.use(cors({ origin: "http://127.0.0.1:3001" }));
 app.use(json());
 app.use(urlencoded({ extended: true }));
 
@@ -32,9 +37,15 @@ try {
 } catch (err) {
     console.log(
         err.message ||
-            "can't Connect to database or Open a tcp socket connection"
+            "Can't Connect to database or Open a tcp socket connection"
     );
 }
 
 // activate all routes
 ActivateRoutes(app);
+
+// if requested api don't match with other Apis
+app.use((req, res) => {
+    return res.status(404).json(createResponse(false,
+        "Api does not exist"))
+});

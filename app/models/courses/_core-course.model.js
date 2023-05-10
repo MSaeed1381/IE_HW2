@@ -1,3 +1,5 @@
+import Joi from "joi";
+
 const baseCoreCourseOption = {
     discriminator: "courses",
     collection: "courses",
@@ -15,21 +17,31 @@ export default (mongoose) =>
                     trim: true,
                     unique: true,
                 },
+
+                field: Joi
+                    .string()
+                    .trim()
+                    .required(),
+
                 prerequisites: [
                     {
                         type: mongoose.Schema.Types.ObjectId,
                         ref: "courses",
+                        default: []
                     },
                 ],
                 corequisites: [
                     {
                         type: mongoose.Schema.Types.ObjectId,
                         ref: "courses",
+                        default: []
                     },
                 ],
-                unit: {
-                    type: Number,
-                },
+                unit: Joi
+                    .number()
+                    .min(0)
+                    .max(4)
+                    .required(),
             },
             baseCoreCourseOption
         )

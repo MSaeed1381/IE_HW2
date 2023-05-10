@@ -23,6 +23,7 @@ export default class Authentication {
             req.user_role = role.name; // name of roles
             next();
         } catch (err) {
+            console.log(err);
             return res
                 .status(403)
                 .json(createResponse(false, "token is not correct!"));

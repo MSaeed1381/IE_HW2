@@ -6,6 +6,9 @@ export default (mongoose) =>
                 type: String,
                 trim: true,
                 unique: true,
+                required: true,
+                default: "student",
+                index: true
             },
         })
     );

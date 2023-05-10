@@ -1,3 +1,4 @@
+import Joi from "joi";
 const baseCoreUserOption = {
     discriminator: "users",
     collection: "users",
@@ -10,25 +11,30 @@ export default (mongoose) =>
         "BaseUserSchema",
         mongoose.Schema(
             {
-                full_name: {
-                    type: String,
-                    trim: true,
-                },
+                full_name: Joi.string()
+                    .trim()
+                    .required(),
+
                 user_id: {
                     type: Number,
                     unique: true,
+                    required: true,
+                    index: true
                 },
-                password_hash: {
-                    type: String,
-                },
-                email: {
-                    type: String,
-                    trim: true,
-                },
-                phone: {
-                    type: String,
-                    trim: true,
-                },
+
+                password_hash: Joi.string()
+                    .trim()
+                    .required(),
+
+                email: Joi.string()
+                    .trim()
+                    .required()
+                    .email(),
+
+                phone: Joi.string()
+                    .trim()
+                    .required(),
+
                 role: {
                     type: mongoose.Schema.Types.ObjectId,
                     ref: "roles",
