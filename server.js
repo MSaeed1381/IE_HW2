@@ -1,4 +1,5 @@
 import express, { json, urlencoded } from "express";
+import rateLimit from 'express-rate-limit';
 import cors from "cors";
 import "dotenv/config";
 
@@ -10,8 +11,14 @@ const app = express();
 
 // middlewares
 app.use(cors({ origin: "http://127.0.0.1:3001" }));
+app.use(rateLimit({
+    max: 100,
+    standardHeaders: true,
+    legacyHeaders: false,
+}));
 app.use(json());
 app.use(urlencoded({ extended: true }));
+
 
 try {
     // connect to database and listen at PORT

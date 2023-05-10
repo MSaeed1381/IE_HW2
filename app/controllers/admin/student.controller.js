@@ -43,6 +43,7 @@ export default class StudentController {
                 gradeAverage,
                 college,
                 field,
+                courses
             } = req.body;
             const password_hash = await hash(password, 10); // hash the password with salt round 10
 
@@ -61,6 +62,7 @@ export default class StudentController {
                 college,
                 field,
                 role,
+                courses
             });
             const data = await student.save(student);
             res.status(201).json(

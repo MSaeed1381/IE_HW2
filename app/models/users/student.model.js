@@ -25,5 +25,9 @@ export default (mongoose) =>
                 type: String,
                 trim: true,
             },
+            courses: [{
+               type: mongoose.Schema.Types.ObjectId,
+               ref: 'courses',
+            }],
         })
     );

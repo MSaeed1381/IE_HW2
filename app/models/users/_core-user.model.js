@@ -1,6 +1,7 @@
 const baseCoreUserOption = {
     discriminator: "users",
     collection: "users",
+    timestamps: true
 };
 
 export default (mongoose) =>

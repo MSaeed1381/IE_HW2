@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 
 import createResponse from "../utils/create-response.js";
 import db from "../models/index.js";
+
 const Role = db.roles;
 
 export default class Authentication {

@@ -1,6 +1,7 @@
 const baseCoreCourseOption = {
     discriminator: "courses",
     collection: "courses",
+    timestamps: true
 };
 
 export default (mongoose) =>
