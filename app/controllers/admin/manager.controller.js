@@ -4,7 +4,7 @@ import db from "../../models/index.js";
 import createResponse from "../../utils/create-response.js";
 import existAllParams from "../../utils/exist-all-params.js";
 
-const EducationManager = db.itManagers;
+const EducationManager = db.educationManagers;
 const Role = db.roles;
 const ROLES = db.ROLES;
 

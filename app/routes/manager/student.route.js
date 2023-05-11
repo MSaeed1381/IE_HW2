@@ -1,24 +1,23 @@
 import express from "express";
-import CourseController from "../../controllers/course.controller.js";
+import StudentController from "../../controllers/admin/student.controller.js";
 import Auth from "../../middlewares/authentication.js";
 import RoleHandler from "../../middlewares/role.handler.js";
 
 const router = express.Router();
 
-router
-    .route("/courses")
-    .post(
-        [Auth.isAuthenticated, RoleHandler.isManager],
-        CourseController.create
-    );
 
 router
-    .route("/courses/:id")
-    .put([Auth.isAuthenticated, RoleHandler.isManager], CourseController.update)
-
-    .delete(
+    .route("/student/:id")
+    .get(
         [Auth.isAuthenticated, RoleHandler.isManager],
-        CourseController.delete
+        StudentController.getStudentById
+    )
+
+router
+    .route("/students")
+    .get(
+        [Auth.isAuthenticated, RoleHandler.isManager],
+        StudentController.getAllStudents
     );
 
 export default router;

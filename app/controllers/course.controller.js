@@ -1,10 +1,12 @@
-import db from "../../models/index.js";
-import createResponse from "../../utils/create-response.js";
-import existAllParams from "../../utils/exist-all-params.js";
+import db from "../models/index.js";
+import createResponse from "../utils/create-response.js";
+import existAllParams from "../utils/exist-all-params.js";
 
 const Course = db.courses;
 const ApprovedCourse = db.approvedCourses;
 const SemesterCourses = db.semesterCourses;
+const ROLES = db.ROLES;
+const User = db.users;
 
 const requiredApprovedCourseParams = [
     "courseName",
@@ -162,44 +164,117 @@ export default class CourseController {
         }
     }
     static async getAllCourses(req, res) {
-        try {
-            const data = await Course.find();
-            return res
-                .status(200)
-                .json(createResponse(true, "get all Courses", data));
-        } catch (err) {
-            return res
-                .status(500)
-                .json(
-                    createResponse(
-                        false,
-                        err.message || `Could not get all Courses.`
-                    )
-                );
+        if (req.user_role === ROLES[1]) { // manager
+            try {
+                const data = await Course.find();
+                return res
+                    .status(200)
+                    .json(createResponse(true, "get all Courses", data));
+            } catch (err) {
+                return res
+                    .status(500)
+                    .json(
+                        createResponse(
+                            false,
+                            err.message || `Could not get all Courses.`
+                        )
+                    );
+            }
+        } else { // professor or student
+            try {
+                const user = await User.findById(req.user_id);
+                const data = await user.populate("courses");
+                const user_field = req.query.field;
+
+                let courses = data.courses;
+                if (user_field)
+                    courses = data.courses.find((item) => item.field === user_field);
+
+                if (data)
+                    return res
+                        .status(200)
+                        .json(createResponse(true, "get all Courses", courses));
+
+                return res
+                    .status(404)
+                    .json(createResponse(false, "courses not found"));
+
+            } catch (err){
+                console.log(err);
+                return res
+                    .status(400)
+                    .json(createResponse(false, "can't find user"));
+            }
         }
+
+
     }
     static async getCourseById(req, res) {
         const id = req.params.id;
-        try {
-            const data = await Course.findById(id);
-            if (data)
+
+        if (req.user_role === ROLES[1]) { // manager
+            try {
+                const data = await Course.findById(id);
+                if (data)
+                    return res
+                        .status(200)
+                        .json(
+                            createResponse(true, `get Course with id ${id}.`, data)
+                        );
+                return res
+                    .status(404)
+                    .json(createResponse(false, `Course with id ${id} not found.`));
+            } catch (err) {
+                return res
+                    .status(500)
+                    .json(
+                        createResponse(
+                            false,
+                            err.message || `Could not get the Course.`
+                        )
+                    );
+            }
+        } else { // students or professors
+            try {
+                const user = await User.findById(req.user_id)
+                    .populate('courses');
+
+                let data = user.courses.find((item) => item._id.toString() === id);
+
+                if (!data)
+                    return res
+                        .status(404)
+                        .json(createResponse(false, `Course with id ${id} not found.`));
+
+
+                const user_field = req.query.field;
+                if (user_field){
+                    if (data.field !== user_field){
+                        return res
+                            .status(404)
+                            .json(
+                                createResponse(true, `Course With This Field not found.`)
+                            );
+                    }
+                }
+
                 return res
                     .status(200)
                     .json(
                         createResponse(true, `get Course with id ${id}.`, data)
                     );
-            return res
-                .status(404)
-                .json(createResponse(false, `Course with id ${id} not found.`));
-        } catch (err) {
-            return res
-                .status(500)
-                .json(
-                    createResponse(
-                        false,
-                        err.message || `Could not get the Course.`
-                    )
-                );
+
+
+            } catch (err) {
+                return res
+                    .status(500)
+                    .json(
+                        createResponse(
+                            false,
+                            err.message || `Could not get the Course.`
+                        )
+                    );
+            }
         }
     }
 }

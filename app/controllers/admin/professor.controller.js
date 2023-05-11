@@ -76,7 +76,33 @@ export default class ProfessorController {
         }
         try {
             const id = req.params.id;
-            const data = await Professor.findByIdAndUpdate(id, req.body, {
+
+            const {
+                full_name,
+                user_id,
+                password,
+                email,
+                phone,
+                college,
+                field,
+                rank
+            } = req.body;
+            const password_hash = await hash(password, 10); // hash the password with salt round 10
+
+            const professor = {
+                full_name,
+                user_id,
+                password_hash,
+                email,
+                phone,
+                college,
+                field,
+                rank,
+            }
+
+            console.log(professor);
+
+            const data = await Professor.findByIdAndUpdate(id, professor, {
                 useFindAndModify: true,
             });
             if (data)
@@ -92,9 +118,10 @@ export default class ProfessorController {
             return res
                 .status(500)
                 .json(
-                    false,
-                    err.message ||
-                        "Some error occurred while updating the Professor."
+                    createResponse(
+                        false,
+                        err.message ||
+                        "Some error occurred while updating the Professor.")
                 );
         }
     }

@@ -33,7 +33,7 @@ export default class LoginController {
 
         const fullName = user.full_name;
         const accessToken = jwt.sign(
-            { id: user.user_id, role: user.role },
+            { id: user._id, role: user.role },
             process.env.ACCESS_TOKEN_SECRET,
             {
                 expiresIn: 259200, // 3 day

@@ -13,18 +13,5 @@ router
         StudentController.update
     );
 
-router
-    .route("/courses")
-    .get(
-        [Auth.isAuthenticated, RoleHandler.isStudent],
-        CourseController.getCourseById
-    );
-
-router
-    .route("/courses")
-    .get(
-        [Auth.isAuthenticated, RoleHandler.isStudent],
-        CourseController.getAllCourses
-    );
 
 export default router;

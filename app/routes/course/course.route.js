@@ -7,18 +7,16 @@ const router = express.Router();
 
 router
     .route("/courses")
-    .post(
-        [Auth.isAuthenticated, RoleHandler.isManager],
-        CourseController.create
+    .get(
+        [Auth.isAuthenticated, RoleHandler.isManagerOrStudentOrProfessor],
+        CourseController.getAllCourses
     );
 
 router
     .route("/courses/:id")
-    .put([Auth.isAuthenticated, RoleHandler.isManager], CourseController.update)
-
-    .delete(
-        [Auth.isAuthenticated, RoleHandler.isManager],
-        CourseController.delete
-    );
+    .get(
+        [Auth.isAuthenticated, RoleHandler.isManagerOrStudentOrProfessor],
+        CourseController.getCourseById
+    )
 
 export default router;
