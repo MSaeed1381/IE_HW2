@@ -253,7 +253,7 @@ export default class CourseController {
                         return res
                             .status(404)
                             .json(
-                                createResponse(true, `Course With This Field not found.`)
+                                createResponse(true, `Course With This Field not found.`),
                             );
                     }
                 }

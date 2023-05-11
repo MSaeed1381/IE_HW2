@@ -8,6 +8,8 @@ import adminRoute from "./admin.route.js";
 import publicCourseRoute from "./course/course.route.js";
 import managerProfessorRoute from "./manager/professor.route.js";
 import managerStudentRoute from "./manager/student.route.js";
+import studentUpdate from "./student/student.route.js";
+import professorUpdate from "./professor/professor.route.js";
 
 import Logger from "../utils/logger.js";
 
@@ -30,4 +32,7 @@ export default (app) => {
     app.use(publicCourseRoute);
     app.use(managerProfessorRoute);
     app.use(managerStudentRoute);
+    app.use(studentUpdate);
+    app.use(professorUpdate);
+
 };

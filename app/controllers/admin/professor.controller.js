@@ -87,7 +87,11 @@ export default class ProfessorController {
                 field,
                 rank
             } = req.body;
-            const password_hash = await hash(password, 10); // hash the password with salt round 10
+
+            let password_hash;
+            if (password)
+                 password_hash = await hash(password, 10); // hash the password with salt round 10
+
 
             const professor = {
                 full_name,
@@ -99,8 +103,6 @@ export default class ProfessorController {
                 field,
                 rank,
             }
-
-            console.log(professor);
 
             const data = await Professor.findByIdAndUpdate(id, professor, {
                 useFindAndModify: true,
