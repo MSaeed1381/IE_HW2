@@ -9,6 +9,7 @@ export default (mongoose) =>
                 .string()
                 .trim()
                 .lowercase()
+                .required()
                 .valid("associate", "bachelor", "master", "doctoral", "professional"),
 
             incomingYear: Joi.number()
@@ -27,7 +28,8 @@ export default (mongoose) =>
 
             college: Joi
                 .string()
-                .trim(),
+                .trim()
+                .required(),
 
             field: Joi
                 .string()

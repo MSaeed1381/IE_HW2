@@ -25,7 +25,7 @@ export default class Authentication {
         } catch (err) {
             console.log(err);
             return res
-                .status(403)
+                .status(400)
                 .json(createResponse(false, "token is not correct!"));
         }
     }

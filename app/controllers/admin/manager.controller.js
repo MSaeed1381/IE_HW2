@@ -20,9 +20,10 @@ const requiredEducationManagerParams = [
 export default class EducationController {
     static async create(req, res) {
         if (!existAllParams(requiredEducationManagerParams, req.body)) {
-            return res
+                res
                 .status(400)
                 .json(createResponse(true, "Content is incomplete!"));
+            return;
         }
         // Save Education Manager in the database
         try {
@@ -124,7 +125,7 @@ export default class EducationController {
     }
     static async getAllEducationManagers(req, res) {
         try {
-            const data = await EducationManager.find();
+            const data = await EducationManager.find().populate('role');
             return res
                 .status(200)
                 .json(createResponse(true, "get all Education Managers", data));
@@ -142,7 +143,7 @@ export default class EducationController {
     static async getEducationManagerById(req, res) {
         const id = req.params.id;
         try {
-            const data = await EducationManager.findById(id);
+            const data = await EducationManager.findById(id).populate('role');
             if (data)
                 return res
                     .status(200)

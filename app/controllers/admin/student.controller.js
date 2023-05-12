@@ -131,7 +131,7 @@ export default class StudentController {
     }
     static async getAllStudents(req, res) {
         try {
-            const data = await Student.find();
+            const data = await Student.find().populate('role');
             return res
                 .status(200)
                 .json(createResponse(true, "get all students", data));
@@ -149,7 +149,7 @@ export default class StudentController {
     static async getStudentById(req, res) {
         const id = req.params.id;
         try {
-            const data = await Student.findById(id);
+            const data = await Student.findById(id).populate('role');
             if (data)
                 return res
                     .status(200)

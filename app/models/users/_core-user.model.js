@@ -33,11 +33,13 @@ export default (mongoose) =>
 
                 phone: Joi.string()
                     .trim()
-                    .required(),
+                    .required()
+                    .regex(/[0-9]{9,11}/),
 
                 role: {
                     type: mongoose.Schema.Types.ObjectId,
                     ref: "roles",
+                    required: true
                 },
             },
             baseCoreUserOption

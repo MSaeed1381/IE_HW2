@@ -166,7 +166,7 @@ export default class CourseController {
     static async getAllCourses(req, res) {
         if (req.user_role === ROLES[1]) { // manager
             try {
-                const data = await Course.find();
+                const data = await Course.find().populate(['courseProfessor', 'prerequisites', 'corequisites']);
                 return res
                     .status(200)
                     .json(createResponse(true, "get all Courses", data));
@@ -183,7 +183,12 @@ export default class CourseController {
         } else { // professor or student
             try {
                 const user = await User.findById(req.user_id);
-                const data = await user.populate("courses");
+                const data = await user.populate(({
+                    path: 'courses',
+                    populate: {
+                        path: 'courseProfessor',
+                    }
+                }));
                 const user_field = req.query.field;
 
                 let courses = data.courses;
@@ -214,7 +219,7 @@ export default class CourseController {
 
         if (req.user_role === ROLES[1]) { // manager
             try {
-                const data = await Course.findById(id);
+                const data = await Course.findById(id).populate('courseProfessor');
                 if (data)
                     return res
                         .status(200)
@@ -237,7 +242,12 @@ export default class CourseController {
         } else { // students or professors
             try {
                 const user = await User.findById(req.user_id)
-                    .populate('courses');
+                    .populate(({
+                        path: 'courses',
+                        populate: {
+                            path: 'courseProfessor',
+                        }
+                    }));
 
                 let data = user.courses.find((item) => item._id.toString() === id);
 

@@ -153,7 +153,7 @@ export default class ProfessorController {
     }
     static async getAllProfessors(req, res) {
         try {
-            const data = await Professor.find();
+            const data = await Professor.find().populate('role');
             return res
                 .status(200)
                 .json(createResponse(true, "get all professors", data));
@@ -171,7 +171,7 @@ export default class ProfessorController {
     static async getProfessorById(req, res) {
         const id = req.params.id;
         try {
-            const data = await Professor.findById(id);
+            const data = await Professor.findById(id).populate('role');
             if (data)
                 return res
                     .status(200)

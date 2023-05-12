@@ -21,7 +21,9 @@ export default (mongoose) =>
                 field: Joi
                     .string()
                     .trim()
-                    .required(),
+                    .required()
+                    .valid("Literature", "CE", "Computer Engineering", "Pharmacy", "Mathematics",
+                        "Physics", "Music", "Agricultural Chemistry", "Biology"),
 
                 prerequisites: [
                     {
