@@ -1,7 +1,7 @@
 openapi: 3.0.0
 servers:
     - description: SwaggerHub API Auto Mocking
-      url: https://virtserver.swaggerhub.com/SAEED1381/IE_HW2/1.0.0
+      url: http://127.0.0.1:3000
 info:
     description: Rest CRUD API for IE_HW2
     version: "1.0.0"
@@ -33,58 +33,43 @@ paths:
         post:
             tags:
                 - Login
-            summary: login and get jwt
+            summary: login with jwt
             operationId: login
             description: |
-                By passing in the correct username and password, you can log in
+                By passing the correct user_id and password, you can log in
             requestBody:
                 content:
                     application/json:
                         schema:
                             type: object
                             required:
-                                - email
+                                - user_id
                                 - password
                             properties:
-                                email:
-                                    type: string
-                                    format: email
+                                user_id:
+                                    type: number
+                                    example: 468452
                                 password:
                                     type: string
+                                    example: "password"
 
             responses:
                 "200":
-                    description: User Logged in
-                    content:
-                        application/json:
-                            schema:
-                                type: object
-                                properties:
-                                    Success:
-                                        type: boolean
-                                    data:
-                                        type: object
-                                        properties:
-                                            full_name:
-                                                type: string
-                                            accessToken:
-                                                type: string
-                                    message:
-                                        type: string
+                    $ref: "#/components/responses/LoginSuccess"
                 "400":
                     $ref: "#/components/responses/BadRequest"
-
                 "404":
                     $ref: "#/components/responses/NotFound"
-
                 "500":
-                    $ref: "#/components/responses/ServerError"
+                    $ref: "#/components/responses/DatabaseValidationError"
 
     /admin/Professor:
         post:
             tags:
                 - admin
             description: create a new professor
+            security:
+                - bearerAuth: [ ]
             requestBody:
                 content:
                     application/json:
@@ -92,11 +77,20 @@ paths:
                             $ref: "#/components/schemas/Professor"
             responses:
                 "201":
-                    description: Professor Created Successfully
+                    description: success
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/responses/Success"
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                                        example: true
+                                    body:
+                                        $ref: "#/components/schemas/Professor"
+                                    message:
+                                        type: string
+                                        example: "create a new professor"
                 "400":
                     $ref: "#/components/responses/BadRequest"
                 "401":
@@ -104,7 +98,7 @@ paths:
                 "403":
                     $ref: "#/components/responses/AccessDenied"
                 "500":
-                    $ref: "#/components/responses/ServerError"
+                    $ref: "#/components/responses/DatabaseValidationError"
 
     /admin/Professor/{id}:
         parameters:
@@ -117,13 +111,11 @@ paths:
             tags:
                 - admin
             description: delete a professor
+            security:
+                - bearerAuth: [ ]
             responses:
                 "200":
-                    description: ok
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/responses/Success"
+                    $ref: "#/components/responses/Success"
                 "404":
                     $ref: "#/components/responses/NotFound"
                 "401":
@@ -131,18 +123,29 @@ paths:
                 "403":
                     $ref: "#/components/responses/AccessDenied"
                 "500":
-                    $ref: "#/components/responses/ServerError"
+                    $ref: "#/components/responses/DatabaseValidationError"
         get:
             tags:
                 - admin
             description: get a professor
+            security:
+                - bearerAuth: [ ]
             responses:
                 "200":
-                    description: ok
+                    description: success
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/Professor"
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                                        example: true
+                                    body:
+                                        $ref: "#/components/schemas/Professor"
+                                    message:
+                                        type: string
+                                        example: "get a professor"
                 "404":
                     $ref: "#/components/responses/NotFound"
                 "401":
@@ -150,11 +153,13 @@ paths:
                 "403":
                     $ref: "#/components/responses/AccessDenied"
                 "500":
-                    $ref: "#/components/responses/ServerError"
+                    $ref: "#/components/responses/DatabaseValidationError"
         put:
             tags:
                 - admin
             description: update a professor
+            security:
+                - bearerAuth: [ ]
             requestBody:
                 content:
                     application/json:
@@ -162,11 +167,20 @@ paths:
                             $ref: "#/components/schemas/Professor"
             responses:
                 "200":
-                    description: ok
+                    description: success
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/responses/Success"
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                                        example: true
+                                    body:
+                                        $ref: "#/components/schemas/Professor"
+                                    message:
+                                        type: string
+                                        example: "update a professor"
                 "400":
                     $ref: "#/components/responses/BadRequest"
                 "404":
@@ -176,31 +190,45 @@ paths:
                 "403":
                     $ref: "#/components/responses/AccessDenied"
                 "500":
-                    $ref: "#/components/responses/ServerError"
+                    $ref: "#/components/responses/DatabaseValidationError"
+
     /admin/Professors:
         get:
             tags:
                 - admin
             description: gets all professors
+            security:
+                - bearerAuth: [ ]
             responses:
                 "200":
-                    description: ok
+                    description: success
                     content:
                         application/json:
                             schema:
-                                type: array
-                                items:
-                                    $ref: "#/components/schemas/Professor"
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                                        example: true
+                                    body:
+                                        type: array
+                                        items:
+                                            $ref: "#/components/schemas/Professor"
+                                    message:
+                                        type: string
+                                        example: "update a professor"
                 "401":
                     $ref: "#/components/responses/Unauthorized"
                 "403":
                     $ref: "#/components/responses/AccessDenied"
                 "500":
-                    $ref: "#/components/responses/ServerError"
+                    $ref: "#/components/responses/DatabaseValidationError"
 
     /admin/student:
         post:
             description: create new student
+            security:
+                - bearerAuth: [ ]
             tags:
                 - admin
             requestBody:
@@ -214,7 +242,16 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/responses/Success"
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                                        example: true
+                                    body:
+                                        $ref: "#/components/schemas/Student"
+                                    message:
+                                        type: string
+                                        example: "create new student"
                 "400":
                     $ref: "#/components/responses/BadRequest"
                 "401":
@@ -222,7 +259,7 @@ paths:
                 "403":
                     $ref: "#/components/responses/AccessDenied"
                 "500":
-                    $ref: "#/components/responses/ServerError"
+                    $ref: "#/components/responses/DatabaseValidationError"
 
     /admin/student/{id}:
         parameters:
@@ -233,6 +270,8 @@ paths:
               required: true
         delete:
             description: delete a student
+            security:
+                - bearerAuth: [ ]
             tags:
                 - admin
             responses:
@@ -249,9 +288,12 @@ paths:
                 "403":
                     $ref: "#/components/responses/AccessDenied"
                 "500":
-                    $ref: "#/components/responses/ServerError"
+                    $ref: "#/components/responses/DatabaseValidationError"
+
         get:
-            description: get all students
+            description: get a student
+            security:
+                - bearerAuth: [ ]
             tags:
                 - admin
             responses:
@@ -260,7 +302,16 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/Student"
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                                        example: true
+                                    body:
+                                        $ref: "#/components/schemas/Student"
+                                    message:
+                                        type: string
+                                        example: "get all students"
                 "404":
                     $ref: "#/components/responses/NotFound"
                 "401":
@@ -268,9 +319,11 @@ paths:
                 "403":
                     $ref: "#/components/responses/AccessDenied"
                 "500":
-                    $ref: "#/components/responses/ServerError"
+                    $ref: "#/components/responses/DatabaseValidationError"
         put:
             description: update a student
+            security:
+                - bearerAuth: [ ]
             tags:
                 - admin
             requestBody:
@@ -284,7 +337,16 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/responses/Success"
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                                        example: true
+                                    body:
+                                        $ref: "#/components/schemas/Student"
+                                    message:
+                                        type: string
+                                        example: "create new student"
                 "400":
                     $ref: "#/components/responses/BadRequest"
                 "404":
@@ -294,10 +356,13 @@ paths:
                 "403":
                     $ref: "#/components/responses/AccessDenied"
                 "500":
-                    $ref: "#/components/responses/ServerError"
+                    $ref: "#/components/responses/DatabaseValidationError"
+
     /admin/students:
         get:
             description: get all students
+            security:
+                - bearerAuth: [ ]
             tags:
                 - admin
             responses:
@@ -314,11 +379,13 @@ paths:
                 "403":
                     $ref: "#/components/responses/AccessDenied"
                 "500":
-                    $ref: "#/components/responses/ServerError"
+                    $ref: "#/components/responses/DatabaseValidationError"
 
     /admin/manager:
         post:
             description: create a new manager
+            security:
+                - bearerAuth: [ ]
             tags:
                 - admin
             requestBody:
@@ -332,7 +399,16 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/responses/Success"
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                                        example: true
+                                    body:
+                                        $ref: "#/components/schemas/Manager"
+                                    message:
+                                        type: string
+                                        example: "create a new manager"
                 "400":
                     $ref: "#/components/responses/BadRequest"
                 "401":
@@ -340,7 +416,7 @@ paths:
                 "403":
                     $ref: "#/components/responses/AccessDenied"
                 "500":
-                    $ref: "#/components/responses/ServerError"
+                    $ref: "#/components/responses/DatabaseValidationError"
 
     /admin/manager/{id}:
         parameters:
@@ -351,15 +427,13 @@ paths:
               required: true
         delete:
             description: delete a manager
+            security:
+                - bearerAuth: [ ]
             tags:
                 - admin
             responses:
                 "200":
-                    description: success
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/responses/Success"
+                    $ref: "#/components/responses/Success"
                 "404":
                     $ref: "#/components/responses/NotFound"
                 "401":
@@ -367,9 +441,11 @@ paths:
                 "403":
                     $ref: "#/components/responses/AccessDenied"
                 "500":
-                    $ref: "#/components/responses/ServerError"
+                    $ref: "#/components/responses/DatabaseValidationError"
         get:
             description: get a manager
+            security:
+                - bearerAuth: [ ]
             tags:
                 - admin
             responses:
@@ -378,7 +454,16 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/Manager"
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                                        example: true
+                                    body:
+                                        $ref: "#/components/schemas/Manager"
+                                    message:
+                                        type: string
+                                        example: "get a manager"
                 "404":
                     $ref: "#/components/responses/NotFound"
                 "401":
@@ -386,9 +471,11 @@ paths:
                 "403":
                     $ref: "#/components/responses/AccessDenied"
                 "500":
-                    $ref: "#/components/responses/ServerError"
+                    $ref: "#/components/responses/DatabaseValidationError"
         put:
             description: update a manager
+            security:
+                - bearerAuth: [ ]
             tags:
                 - admin
             requestBody:
@@ -402,7 +489,16 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/responses/Success"
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                                        example: true
+                                    body:
+                                        $ref: "#/components/schemas/Manager"
+                                    message:
+                                        type: string
+                                        example: "update a manager"
                 "400":
                     $ref: "#/components/responses/BadRequest"
                 "404":
@@ -412,10 +508,12 @@ paths:
                 "403":
                     $ref: "#/components/responses/AccessDenied"
                 "500":
-                    $ref: "#/components/responses/ServerError"
+                    $ref: "#/components/responses/DatabaseValidationError"
     /admin/managers:
         get:
             description: get all managers
+            security:
+                - bearerAuth: [ ]
             tags:
                 - admin
             responses:
@@ -424,19 +522,30 @@ paths:
                     content:
                         application/json:
                             schema:
-                                type: array
-                                items:
-                                    $ref: "#/components/schemas/Manager"
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                                        example: true
+                                    body:
+                                        type: array
+                                        items:
+                                            $ref: "#/components/schemas/Manager"
+                                    message:
+                                        type: string
+                                        example: "get all managers"
                 "401":
                     $ref: "#/components/responses/Unauthorized"
                 "403":
                     $ref: "#/components/responses/AccessDenied"
                 "500":
-                    $ref: "#/components/responses/ServerError"
+                    $ref: "#/components/responses/DatabaseValidationError"
 
     /students:
         get:
             description: get all students
+            security:
+                - bearerAuth: [ ]
             tags:
                 - manager
             responses:
@@ -445,15 +554,24 @@ paths:
                     content:
                         application/json:
                             schema:
-                                type: array
-                                items:
-                                    $ref: "#/components/schemas/Student"
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                                        example: true
+                                    body:
+                                        type: array
+                                        items:
+                                            $ref: "#/components/schemas/Student"
+                                    message:
+                                        type: string
+                                        example: "get all students"
                 "401":
                     $ref: "#/components/responses/Unauthorized"
                 "403":
                     $ref: "#/components/responses/AccessDenied"
                 "500":
-                    $ref: "#/components/responses/ServerError"
+                    $ref: "#/components/responses/DatabaseValidationError"
 
     /student/{id}:
         parameters:
@@ -464,6 +582,8 @@ paths:
               required: true
         get:
             description: get a student
+            security:
+                - bearerAuth: [ ]
             tags:
                 - manager
             responses:
@@ -472,7 +592,16 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/Student"
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                                        example: true
+                                    body:
+                                        $ref: "#/components/schemas/Student"
+                                    message:
+                                        type: string
+                                        example: "get a student"
                 "404":
                     $ref: "#/components/responses/NotFound"
                 "401":
@@ -480,9 +609,11 @@ paths:
                 "403":
                     $ref: "#/components/responses/AccessDenied"
                 "500":
-                    $ref: "#/components/responses/ServerError"
+                    $ref: "#/components/responses/DatabaseValidationError"
         put:
             description: update a student
+            security:
+                - bearerAuth: [ ]
             tags:
                 - student
             requestBody:
@@ -496,7 +627,16 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/responses/Success"
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                                        example: true
+                                    body:
+                                        $ref: "#/components/schemas/Student"
+                                    message:
+                                        type: string
+                                        example: "update a student"
                 "400":
                     $ref: "#/components/responses/BadRequest"
                 "404":
@@ -506,11 +646,13 @@ paths:
                 "403":
                     $ref: "#/components/responses/AccessDenied"
                 "500":
-                    $ref: "#/components/responses/ServerError"
+                    $ref: "#/components/responses/DatabaseValidationError"
 
     /Professors:
         get:
-            description: gets all professors
+            description: get all professors
+            security:
+                - bearerAuth: [ ]
             tags:
                 - manager
             responses:
@@ -519,15 +661,24 @@ paths:
                     content:
                         application/json:
                             schema:
-                                type: array
-                                items:
-                                    $ref: "#/components/schemas/Professor"
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                                        example: true
+                                    body:
+                                        type: array
+                                        items:
+                                            $ref: "#/components/schemas/Professor"
+                                    message:
+                                        type: string
+                                        example: "get all professors"
                 "401":
                     $ref: "#/components/responses/Unauthorized"
                 "403":
                     $ref: "#/components/responses/AccessDenied"
                 "500":
-                    $ref: "#/components/responses/ServerError"
+                    $ref: "#/components/responses/DatabaseValidationError"
 
     /Professor/{id}:
         parameters:
@@ -537,7 +688,9 @@ paths:
                   type: string
               required: true
         get:
-            description: get a professor user
+            description: get a professor
+            security:
+                - bearerAuth: [ ]
             tags:
                 - manager
             responses:
@@ -546,7 +699,17 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/Professor"
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                                        example: true
+                                    body:
+                                        $ref: "#/components/schemas/Professor"
+                                    message:
+                                        type: string
+                                        example: "get a professor"
+
                 "404":
                     $ref: "#/components/responses/NotFound"
                 "401":
@@ -554,9 +717,11 @@ paths:
                 "403":
                     $ref: "#/components/responses/AccessDenied"
                 "500":
-                    $ref: "#/components/responses/ServerError"
+                    $ref: "#/components/responses/DatabaseValidationError"
         put:
             description: update a professor
+            security:
+                - bearerAuth: [ ]
             tags:
                 - professor
             requestBody:
@@ -570,7 +735,16 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/responses/Success"
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                                        example: true
+                                    body:
+                                        $ref: "#/components/schemas/Professor"
+                                    message:
+                                        type: string
+                                        example: "update a professor"
                 "400":
                     $ref: "#/components/responses/BadRequest"
                 "404":
@@ -580,11 +754,13 @@ paths:
                 "403":
                     $ref: "#/components/responses/AccessDenied"
                 "500":
-                    $ref: "#/components/responses/ServerError"
+                    $ref: "#/components/responses/DatabaseValidationError"
 
     /course:
         post:
             description: create a new course
+            security:
+                - bearerAuth: [ ]
             tags:
                 - manager
             requestBody:
@@ -598,7 +774,16 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/responses/Success"
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                                        example: true
+                                    body:
+                                        $ref: "#/components/schemas/Course"
+                                    message:
+                                        type: string
+                                        example: "create a new course"
                 "400":
                     $ref: "#/components/responses/BadRequest"
                 "401":
@@ -606,7 +791,7 @@ paths:
                 "403":
                     $ref: "#/components/responses/AccessDenied"
                 "500":
-                    $ref: "#/components/responses/ServerError"
+                    $ref: "#/components/responses/DatabaseValidationError"
 
     /course/{id}:
         parameters:
@@ -617,15 +802,13 @@ paths:
               required: true
         delete:
             description: delete a course
+            security:
+                - bearerAuth: [ ]
             tags:
                 - manager
             responses:
                 "200":
-                    description: success
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/responses/Success"
+                    $ref: "#/components/responses/Success"
                 "404":
                     $ref: "#/components/responses/NotFound"
                 "401":
@@ -633,7 +816,7 @@ paths:
                 "403":
                     $ref: "#/components/responses/AccessDenied"
                 "500":
-                    $ref: "#/components/responses/ServerError"
+                    $ref: "#/components/responses/DatabaseValidationError"
         get:
             parameters:
                 - in: query
@@ -642,6 +825,8 @@ paths:
                       type: string
 
             description: get a course
+            security:
+                - bearerAuth: [ ]
             tags:
                 - manager
                 - professor
@@ -653,7 +838,16 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/Course"
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                                        example: true
+                                    body:
+                                        $ref: "#/components/schemas/Course"
+                                    message:
+                                        type: string
+                                        example: "get a course"
                 "404":
                     $ref: "#/components/responses/NotFound"
                 "401":
@@ -661,9 +855,11 @@ paths:
                 "403":
                     $ref: "#/components/responses/AccessDenied"
                 "500":
-                    $ref: "#/components/responses/ServerError"
+                    $ref: "#/components/responses/DatabaseValidationError"
         put:
             description: update a course
+            security:
+                - bearerAuth: [ ]
             tags:
                 - manager
             requestBody:
@@ -677,7 +873,16 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/responses/Success"
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                                        example: true
+                                    body:
+                                        $ref: "#/components/schemas/Course"
+                                    message:
+                                        type: string
+                                        example: "update a course"
                 "400":
                     $ref: "#/components/responses/BadRequest"
                 "404":
@@ -687,7 +892,7 @@ paths:
                 "403":
                     $ref: "#/components/responses/AccessDenied"
                 "500":
-                    $ref: "#/components/responses/ServerError"
+                    $ref: "#/components/responses/DatabaseValidationError"
     /courses:
         get:
             parameters:
@@ -697,6 +902,8 @@ paths:
                       type: string
 
             description: gets all courses
+            security:
+                - bearerAuth: [ ]
             tags:
                 - manager
                 - student
@@ -708,33 +915,32 @@ paths:
                     content:
                         application/json:
                             schema:
-                                type: array
-                                items:
-                                    $ref: "#/components/schemas/Course"
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                                        example: true
+                                    body:
+                                        type: array
+                                        items:
+                                            $ref: "#/components/schemas/Course"
+                                    message:
+                                        type: string
+                                        example: "get all courses"
                 "401":
                     $ref: "#/components/responses/Unauthorized"
-
                 "403":
                     $ref: "#/components/responses/AccessDenied"
                 "500":
-                    $ref: "#/components/responses/ServerError"
+                    $ref: "#/components/responses/DatabaseValidationError"
 components:
-    responses:
-        Success:
-            description: done Successfully
-            content:
-                application/json:
-                    schema:
-                        type: object
-                        properties:
-                            Success:
-                                type: boolean
-                                example: true
-                            data:
-                                type: object
-                            message:
-                                type: string
+    securitySchemes:
+        bearerAuth:
+            type: http
+            scheme: bearer
+            bearerFormat: JWT
 
+    responses:
         Unauthorized:
             description: token not provided
             content:
@@ -742,7 +948,7 @@ components:
                     schema:
                         type: object
                         properties:
-                            Success:
+                            success:
                                 type: boolean
                                 example: false
                             message:
@@ -756,7 +962,7 @@ components:
                     schema:
                         type: object
                         properties:
-                            Success:
+                            success:
                                 type: boolean
                                 example: false
                             message:
@@ -770,7 +976,7 @@ components:
                     schema:
                         type: object
                         properties:
-                            Success:
+                            success:
                                 type: boolean
                                 example: false
                             message:
@@ -784,14 +990,14 @@ components:
                     schema:
                         type: object
                         properties:
-                            Success:
+                            success:
                                 type: boolean
                                 example: false
                             message:
                                 type: string
                                 example: "not found"
 
-        ServerError:
+        DatabaseValidationError:
             description: Internal Server Error
             content:
                 application/json:
@@ -799,30 +1005,56 @@ components:
                         type: object
 
                         properties:
-                            Success:
+                            success:
                                 type: boolean
                                 example: false
                             message:
                                 type: string
                                 example: "Internal Server Error"
+
+        LoginSuccess:
+            description: login Successfully
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        properties:
+                            success:
+                                type: boolean
+                            data:
+                                type: object
+                                properties:
+                                    full_name:
+                                        type: string
+                                    accessToken:
+                                        type: string
+                            message:
+                                type: string
+
+        Success:
+            description: done Successfully
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        properties:
+                            success:
+                                type: boolean
+                                example: true
+                            message:
+                                type: string
+
     schemas:
         User:
             type: object
             required:
-                - objectId
                 - full_name
                 - user_id
-                - password_hash
+                - password
                 - email
                 - phone
-                - role
 
             properties:
-                objectId:
-                    type: string
-                    format: ObjectId
-                    example: 645c82e9274128a7f12f0dad
-
                 full_name:
                     type: string
                     example: "Saeed Zare"
@@ -831,7 +1063,7 @@ components:
                     type: number
                     example: 99243037
 
-                password_hash:
+                password:
                     type: string
                     example: "123456"
 
@@ -847,19 +1079,6 @@ components:
                     minLength: 9
                     maxLength: 11
 
-                updatedAt:
-                    type: string
-                    format: date-time
-                    example: "2020-08-29T09:12:33.001Z"
-
-                createdAt:
-                    type: string
-                    format: date-time
-                    example: "2020-08-29T09:12:33.001Z"
-
-                role:
-                    $ref: "#/components/schemas/Role"
-
         Manager:
             allOf:
                 - $ref: "#/components/schemas/User"
@@ -870,7 +1089,6 @@ components:
             properties:
                 college:
                     type: string
-                    format: ObjectId
                     example: "CE"
 
         Admin:
@@ -919,8 +1137,6 @@ components:
                 courses:
                     type: array
                     items:
-                        type: string
-                        format: ObjectId
                         $ref: "#/components/schemas/Course"
 
                     example: ["645c82e9274128a7f12f0dad"]
@@ -988,8 +1204,6 @@ components:
                 courses:
                     type: array
                     items:
-                        type: string
-                        format: ObjectId
                         $ref: "#/components/schemas/Course"
 
                     example: ["645c82e9274128a7f12f0dad"]
@@ -997,18 +1211,12 @@ components:
         Course:
             type: object
             required:
-                - objectId
                 - courseName
                 - field
                 - unit
                 - courseType
 
             properties:
-                objectId:
-                    type: string
-                    format: ObjectId
-                    example: 645c82e9274128a7f12f0dad
-
                 courseName:
                     type: string
                     example: "AP"
@@ -1022,7 +1230,7 @@ components:
 
                 field:
                     type: string
-                    example: CE
+                    example: 'CE'
                     enum:
                         - Literature
                         - CE
@@ -1037,12 +1245,14 @@ components:
                 prerequisites:
                     type: array
                     items:
-                        $ref: "#/components/schemas/Course"
+                        type: string
+                        format: objectId
 
                 corequisites:
                     type: array
                     items:
-                        $ref: "#/components/schemas/Course"
+                        type: string
+                        format: objectId
 
                 unit:
                     type: number
@@ -1083,10 +1293,7 @@ components:
                     example: "Tehran"
 
                 courseProfessor:
-                    type: string
-                    format: ObjectId
                     $ref: "#/components/schemas/Professor"
-                    example: 645c82e9274128a7f12f0dad
 
                 capacity:
                     type: number
@@ -1101,15 +1308,9 @@ components:
         Role:
             type: object
             required:
-                - objectId
                 - name
 
             properties:
-                objectId:
-                    type: string
-                    format: ObjectId
-                    example: 645c82e9274128a7f12f0dad
-
                 name:
                     type: string
                     example: admin

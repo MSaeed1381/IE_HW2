@@ -1,3 +1,7 @@
+import swaggerUi from 'swagger-ui-express';
+import fs from "fs";
+import YAML from "yaml";
+
 import professorRoute from "./admin/professor.route.js";
 import studentRoute from "./admin/student.route.js";
 import educationManagerRoute from "./admin/manager.route.js";
@@ -15,12 +19,26 @@ import Logger from "../utils/logger.js";
 
 // break our app into separate mini-app
 export default (app) => {
+    const swaggerFile  = fs.readFileSync('./openapi.yaml', 'utf8')
+    const swaggerDocument = YAML.parse(swaggerFile)
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+
     app.use((req, res, next) => {
         res.on("finish", () => {
             Logger(req, res);
         });
         next();
     });
+
+    app.get('/',(req, res) => {
+        res.status(200).json({ok: true, message: "Golestan Api"})
+    })
+
+
+
+
+
 
     app.use(loginRoute);
     app.use(professorRoute);

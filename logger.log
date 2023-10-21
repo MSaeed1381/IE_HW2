@@ -221,3 +221,38 @@ localhost PostmanRuntime/7.32.2 $athun [2023-05-12T16:51:29.007Z] "GET /admin/ma
 localhost PostmanRuntime/7.32.2 $athun [2023-05-12T16:51:56.557Z] "GET /admin/managers http/1.1" 403 0
 localhost PostmanRuntime/7.32.2 $athun [2023-05-12T16:52:07.344Z] "POST /login http/1.1" 200 44
 localhost PostmanRuntime/7.32.2 $athun [2023-05-12T16:52:21.287Z] "GET /admin/managers http/1.1" 200 0
+localhost Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15 $athun [2023-10-20T11:07:14.298Z] "GET / http/1.1" 404 0
+localhost Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15 $athun [2023-10-20T11:07:14.501Z] "GET /favicon.ico http/1.1" 404 0
+localhost PostmanRuntime/7.33.0 $athun [2023-10-20T11:07:43.301Z] "GET / http/1.1" 404 0
+localhost PostmanRuntime/7.33.0 $athun [2023-10-20T11:11:23.069Z] "GET / http/1.1" 200 0
+localhost PostmanRuntime/7.33.0 $athun [2023-10-20T11:17:05.049Z] "GET / http/1.1" 200 0
+localhost PostmanRuntime/7.33.0 $athun [2023-10-20T11:17:10.773Z] "GET / http/1.1" 200 0
+localhost PostmanRuntime/7.33.0 $athun [2023-10-20T11:27:28.226Z] "POST /login http/1.1" 200 44
+localhost PostmanRuntime/7.33.0 $athun [2023-10-20T11:27:34.330Z] "GET / http/1.1" 200 0
+localhost PostmanRuntime/7.33.0 $athun [2023-10-20T11:27:38.614Z] "POST /login http/1.1" 200 44
+localhost PostmanRuntime/7.33.0 $athun [2023-10-20T11:27:39.624Z] "POST /login http/1.1" 200 44
+localhost PostmanRuntime/7.33.0 $athun [2023-10-20T11:28:05.862Z] "POST /login http/1.1" 404 44
+localhost PostmanRuntime/7.33.0 $athun [2023-10-20T11:28:11.276Z] "POST /login http/1.1" 404 44
+localhost PostmanRuntime/7.33.0 $athun [2023-10-20T11:28:46.160Z] "POST /admin http/1.1" 500 134
+localhost PostmanRuntime/7.33.0 $athun [2023-10-20T11:29:39.017Z] "POST /admin http/1.1" 500 134
+localhost PostmanRuntime/7.33.0 $athun [2023-10-20T11:33:51.749Z] "POST /admin/roles http/1.1" 201 25
+localhost PostmanRuntime/7.33.0 $athun [2023-10-20T11:34:45.351Z] "POST /admin/roles http/1.1" 201 31
+localhost PostmanRuntime/7.33.0 $athun [2023-10-20T11:34:59.669Z] "POST /admin/roles http/1.1" 201 29
+localhost PostmanRuntime/7.33.0 $athun [2023-10-20T11:35:06.683Z] "POST /admin/roles http/1.1" 201 27
+localhost PostmanRuntime/7.33.0 $athun [2023-10-20T11:35:33.005Z] "POST /admin http/1.1" 201 134
+localhost PostmanRuntime/7.33.0 $athun [2023-10-20T11:37:51.238Z] "POST /login http/1.1" 400 46
+localhost PostmanRuntime/7.33.0 $athun [2023-10-20T11:38:05.662Z] "POST /login http/1.1" 200 49
+localhost PostmanRuntime/7.33.0 $athun [2023-10-20T11:39:14.985Z] "POST /admin/student http/1.1" 201 334
+localhost PostmanRuntime/7.33.0 $athun [2023-10-20T11:41:26.568Z] "POST /login http/1.1" 200 49
+localhost PostmanRuntime/7.33.0 $athun [2023-10-20T11:41:29.600Z] "POST /login http/1.1" 200 49
+localhost PostmanRuntime/7.33.0 $athun [2023-10-20T11:41:30.596Z] "POST /login http/1.1" 200 49
+localhost PostmanRuntime/7.33.0 $athun [2023-10-20T11:41:31.400Z] "POST /login http/1.1" 200 49
+localhost PostmanRuntime/7.33.0 $athun [2023-10-20T11:41:44.161Z] "POST /admin/student http/1.1" 400 334
+localhost PostmanRuntime/7.33.0 $athun [2023-10-20T11:42:16.361Z] "POST /login http/1.1" 200 49
+localhost PostmanRuntime/7.33.0 $athun [2023-10-20T11:42:25.185Z] "POST /admin/student http/1.1" 500 334
+localhost PostmanRuntime/7.33.0 $athun [2023-10-20T11:49:38.785Z] "POST /login http/1.1" 200 49
+localhost PostmanRuntime/7.33.0 $athun [2023-10-20T11:50:01.990Z] "POST /login http/1.1" 400 48
+127.0.0.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36 $athun [2023-10-20T12:04:33.727Z] "GET //api-docs http/1.1" 404 0
+127.0.0.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36 $athun [2023-10-20T12:04:33.797Z] "GET /favicon.ico http/1.1" 404 0
+localhost Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15 $athun [2023-10-20T17:57:58.154Z] "GET / http/1.1" 200 0
+localhost Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15 $athun [2023-10-20T17:57:58.157Z] "GET /favicon.ico http/1.1" 404 0

@@ -7,7 +7,7 @@ import db from "./app/models/index.js";
 import ActivateRoutes from "./app/routes/index.js";
 import createResponse from "./app/utils/create-response.js";
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 const app = express();
 
 // rate limit middleware
