@@ -31,6 +31,7 @@ export default (mongoose) =>
                     .required()
                     .email(),
 
+                // regex validation for phone number
                 phone: Joi.string()
                     .trim()
                     .required()

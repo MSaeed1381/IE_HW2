@@ -14,6 +14,7 @@ export default class Authentication {
                 .json(createResponse(false, "token not provided"));
 
         try {
+            // if token id correct
             const data = await jwt.verify(
                 token,
                 process.env.ACCESS_TOKEN_SECRET
@@ -23,7 +24,7 @@ export default class Authentication {
             req.user_role = role.name; // name of roles
             next();
         } catch (err) {
-            console.log(err);
+            // if token id not correct
             return res
                 .status(400)
                 .json(createResponse(false, "token is not correct!"));

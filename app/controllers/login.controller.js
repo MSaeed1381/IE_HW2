@@ -31,7 +31,7 @@ export default class LoginController {
                 .status(400)
                 .json(createResponse(false, `password is not correct`));
 
-        const fullName = user.full_name;
+        // create access token
         const accessToken = jwt.sign(
             { id: user._id, role: user.role },
             process.env.ACCESS_TOKEN_SECRET,
@@ -39,6 +39,9 @@ export default class LoginController {
                 expiresIn: 259200, // 3 day
             }
         );
+
+        const fullName = user.full_name;
+
         return res.status(200).json(
             createResponse(true, `User Logged in`, {
                 fullName,

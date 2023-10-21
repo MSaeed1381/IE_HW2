@@ -1,5 +1,6 @@
 import Joi from "joi";
 
+// base class for course that approved and semester course extends this.
 const baseCoreCourseOption = {
     discriminator: "courses",
     collection: "courses",
@@ -7,6 +8,7 @@ const baseCoreCourseOption = {
 };
 
 export default (mongoose) =>
+    // dependency injection and singleton
     mongoose.models.courses ||
     mongoose.model(
         "courses",
@@ -18,6 +20,7 @@ export default (mongoose) =>
                     unique: true,
                 },
 
+                // enum for validation
                 field: Joi
                     .string()
                     .trim()
@@ -25,6 +28,7 @@ export default (mongoose) =>
                     .valid("Literature", "CE", "Computer Engineering", "Pharmacy", "Mathematics",
                         "Physics", "Music", "Agricultural Chemistry", "Biology"),
 
+                // relation
                 prerequisites: [
                     {
                         type: mongoose.Schema.Types.ObjectId,

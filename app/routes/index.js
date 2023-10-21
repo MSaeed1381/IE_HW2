@@ -19,11 +19,13 @@ import Logger from "../utils/logger.js";
 
 // break our app into separate mini-app
 export default (app) => {
+
+    // config swagger doc on localhost
     const swaggerFile  = fs.readFileSync('./openapi.yaml', 'utf8')
     const swaggerDocument = YAML.parse(swaggerFile)
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-
+    // a event driven route that when a request complete, this route call.
     app.use((req, res, next) => {
         res.on("finish", () => {
             Logger(req, res);
@@ -31,15 +33,12 @@ export default (app) => {
         next();
     });
 
+    // main route
     app.get('/',(req, res) => {
         res.status(200).json({ok: true, message: "Golestan Api"})
     })
 
-
-
-
-
-
+    // activate all routes
     app.use(loginRoute);
     app.use(professorRoute);
     app.use(studentRoute);
