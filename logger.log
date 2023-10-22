@@ -256,3 +256,6 @@ localhost PostmanRuntime/7.33.0 $athun [2023-10-20T11:50:01.990Z] "POST /login h
 127.0.0.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36 $athun [2023-10-20T12:04:33.797Z] "GET /favicon.ico http/1.1" 404 0
 localhost Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15 $athun [2023-10-20T17:57:58.154Z] "GET / http/1.1" 200 0
 localhost Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15 $athun [2023-10-20T17:57:58.157Z] "GET /favicon.ico http/1.1" 404 0
+localhost Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15 $athun [2023-10-21T20:34:15.757Z] "GET / http/1.1" 304 0
+localhost Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15 $athun [2023-10-21T20:34:15.777Z] "GET /favicon.ico http/1.1" 404 0
+127.0.0.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36 $athun [2023-10-21T20:34:40.060Z] "POST /login http/1.1" 404 49

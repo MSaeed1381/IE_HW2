@@ -1,7 +1,7 @@
 openapi: 3.0.0
 servers:
     - description: SwaggerHub API Auto Mocking
-      url: http://127.0.0.1:3000
+      url: http://127.0.0.1:80
 info:
     description: Rest CRUD API for IE_HW2
     version: "1.0.0"
